@@ -29,6 +29,18 @@ const string LogEntry::GetIpAddress() const
     return ipAddress;
 } //----- Fin de GetIpAddress
 
+const string LogEntry::GetUserLogname() const
+// Algorithme :
+{
+    return userLogname;
+} //----- Fin de GetUserLogname
+
+const string LogEntry::GetAuthUser() const
+// Algorithme :
+{
+    return authUser;
+} //----- Fin de GetAuthUser
+
 const int LogEntry::GetTimestamp() const
 // Algorithme :
 {
