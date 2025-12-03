@@ -28,7 +28,7 @@ OBJECTS  = $(SOURCES:.cpp=.o)
 DEPS     = $(OBJECTS:.o=.d)
 
 # Nom de l'exécutable
-EXE      = TP3_CatalogueTrajets
+EXE      = TP4_Analog
 
 # Cibles phony
 .PHONY: all clean run run-map trace valgrind

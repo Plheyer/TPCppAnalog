@@ -34,7 +34,7 @@ class Graph
 
 public:
 //----------------------------------------------------- Attributs publics
-    unordered_map<string, pair<unordered_map<string, int>, int> hits;
+    unordered_map<string, pair<unordered_map<string, int>, int>> hits;
     vector<pair<string, int>> topList;
 
 //----------------------------------------------------- Méthodes publiques

@@ -61,34 +61,6 @@ bool Graph::GenerateGraphViz (const string& filename) const
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-Graph::Graph ( const Graph & unGraph )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Graph>" << endl;
-#endif
-} //----- Fin de Graph (constructeur de copie)
-
-
-Graph::Graph ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <Graph>" << endl;
-#endif
-} //----- Fin de Graph
-
-
-Graph::~Graph ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <Graph>" << endl;
-#endif
-} //----- Fin de ~Graph
 
 
 //------------------------------------------------------------------ PRIVE
