@@ -11,6 +11,7 @@
 #include <cstring>
 #include "./CouleurTTY.h"
 #include "./Graph.h"
+#include "./Config.h"
 using namespace std;
 #define MAX_TAMPON 100
 
@@ -35,10 +36,14 @@ int main(int argc, char* argv[])
     bool excludeOption = false;
     bool graphVizOption = false;
     bool hourOption = false;
-    string graphVizFile;
-    int filterHour = -1;
-    string logFile;
     bool debug = false;
+    int filterHour = -1;
+    string graphVizFile, logFile, baseUri;
+
+    Config config;
+    config.LoadFromFile();
+    debug = config.debug;
+    baseUri = config.baseUri;
     
     // Parsing arguments
     int i = 1;

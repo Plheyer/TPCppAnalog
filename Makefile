@@ -23,6 +23,7 @@ SOURCES  = main.cpp \
            Graph.cpp \
            ApacheLogStream.cpp \
 		   LogEntry.cpp \
+		   Config.cpp
 
 
 OBJECTS  = $(SOURCES:.cpp=.o)
