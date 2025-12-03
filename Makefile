@@ -22,6 +22,7 @@ endif
 SOURCES  = main.cpp \
            Graph.cpp \
            ApacheLogStream.cpp \
+		   LogEntry.cpp \
 
 
 OBJECTS  = $(SOURCES:.cpp=.o)
