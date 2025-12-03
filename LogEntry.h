@@ -29,41 +29,66 @@ class LogEntry
 //----------------------------------------------------------------- PUBLIC
 
 public:
-//----------------------------------------------------- Attributs publics
-    string ip_address;
-    int timestamp;
-    string http_method;
-    int status_code;
-    long data_size;
-    string referrer_url;
-    string user_agent;
-
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    const string GetIpAddress() const;
     // Mode d'emploi :
     //
     // Contrat :
     //
 
+    const int GetTimestamp() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetHttpMethod() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const int GetStatusCode() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const long GetDataSize() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetReferrerUrl() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetUserAgent() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-    LogEntry ( ){
-    #ifdef MAP
-        cout << "Appel au constructeur de <LogEntry>" << endl;
-    #endif
-    }
+    LogEntry (string ipAddress = "",
+              int timestamp = 0,
+              string httpMethod = "",
+              int statusCode = 0,
+              long dataSize = 0,
+              string referrerUrl = "",
+              string userAgent = "" );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~LogEntry ( ){
-    #ifdef MAP
-        cout << "Appel au destructeur de <LogEntry>" << endl;
-    #endif
-}    // Mode d'emploi :
+    virtual ~LogEntry ( );
+    // Mode d'emploi :
     //
     // Contrat :
     //
@@ -74,6 +99,13 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
+    const string ipAddress;
+    const int timestamp;
+    const string httpMethod;
+    const int statusCode;
+    const long dataSize;
+    const string referrerUrl;
+    const string userAgent;
 
 };
 
