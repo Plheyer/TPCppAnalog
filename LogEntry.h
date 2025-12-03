@@ -36,6 +36,18 @@ public:
     // Contrat :
     //
 
+    const string GetUserLogname() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetAuthUser() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
     const int GetTimestamp() const;
     // Mode d'emploi :
     //
@@ -43,6 +55,18 @@ public:
     //
 
     const string GetHttpMethod() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetDestinationUrl() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    const string GetHttpVersion() const;
     // Mode d'emploi :
     //
     // Contrat :
@@ -76,12 +100,16 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
     LogEntry (string ipAddress = "",
-              int timestamp = 0,
-              string httpMethod = "",
-              int statusCode = 0,
-              long dataSize = 0,
-              string referrerUrl = "",
-              string userAgent = "" );
+        string userLogname = "",
+        string authUser = "",
+        int timestamp = 0,
+        string httpMethod = "",
+        string destinationUrl = "",
+        string httpVersion = "",
+        int statusCode = 0,
+        long dataSize = 0,
+        string referrerUrl = "",
+        string userAgent = "" );
     // Mode d'emploi :
     //
     // Contrat :
@@ -100,8 +128,12 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     const string ipAddress;
+    const string userLogname;
+    const string authUser;
     const int timestamp;
     const string httpMethod;
+    const string destinationUrl;
+    const string httpVersion;
     const int statusCode;
     const long dataSize;
     const string referrerUrl;
