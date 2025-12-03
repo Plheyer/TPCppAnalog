@@ -54,7 +54,7 @@ LogEntry ApacheLogStream::getline()
         ipAddress = match[1];
         userLogname = match[2];
         authUser = match[3];
-        timestamp = 0; // Placeholder: actual timestamp parsing needed
+        timestamp = 0; // TODO: parsing needed
         httpMethod = match[5];
         destinationUrl = match[6];
         httpVersion = match[7];
@@ -65,7 +65,7 @@ LogEntry ApacheLogStream::getline()
         if (startPos != string::npos) {
             referrerUrl.replace(startPos, baseUri.length(), "");
         }
-        userAgent = match[12];
+        userAgent = match[11];
     } else {
         // Handle parsing error (e.g., log it, throw an exception, etc.)
         printf("Failed to parse log line: %s\n", line.c_str());
