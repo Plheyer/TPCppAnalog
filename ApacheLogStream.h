@@ -44,7 +44,7 @@ public:
     /**
      * Constructeur par défaut
      */
-    ApacheLogStream ( );
+    ApacheLogStream ( const string & filePath, const string & baseUri = "" );
 
     /**
      * Destructeur, libérant la mémoire de la liste
@@ -57,6 +57,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
+    const string baseUri;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Catalogue>

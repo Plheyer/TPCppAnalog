@@ -12,6 +12,8 @@
 
 //-------------------------------------------------------- Include système
 #include <fstream>
+#include <regex>
+#include <string>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -30,25 +32,53 @@ LogEntry ApacheLogStream::getline()
     string line;
 
     string ipAddress = "";
+    string userLogname = "";
+    string authUser = "";
     int timestamp = 0;
     string httpMethod = "";
+    string destinationUrl = "";
+    string httpVersion = "";
     int statusCode = 0;
     long dataSize = 0;
     string referrerUrl = "";
     string userAgent = "";
 
-    *this >> line;
+    std::getline(*this, line);
 
-    printf("Parsing line: %s\n", line.c_str());
+    regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9]+) \"([^\"]+)\" \"([^\"]+)\"");
 
-    return LogEntry(ipAddress, timestamp, httpMethod, statusCode, dataSize, referrerUrl, userAgent);
+    smatch match;
+    regex_search(line, match, expression);
+
+    if (match.size() == 12) {
+        ipAddress = match[1];
+        userLogname = match[2];
+        authUser = match[3];
+        timestamp = 0; // TODO: parsing needed
+        httpMethod = match[5];
+        destinationUrl = match[6];
+        httpVersion = match[7];
+        statusCode = stoi(match[8]);
+        dataSize = stol(match[9]);
+        referrerUrl = match[10];
+        int startPos = referrerUrl.find(baseUri);
+        if (startPos != string::npos) {
+            referrerUrl.replace(startPos, baseUri.length(), "");
+        }
+        userAgent = match[11];
+    } else {
+        // Handle parsing error (e.g., log it, throw an exception, etc.)
+        printf("Failed to parse log line: %s\n", line.c_str());
+    }
+
+    return LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
 } //----- Fin de Afficher
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
-ApacheLogStream::ApacheLogStream()
+ApacheLogStream::ApacheLogStream(const string & filePath, const string & baseUri) : ifstream ( filePath ), baseUri ( baseUri )
 // Algorithme :
 //
 {

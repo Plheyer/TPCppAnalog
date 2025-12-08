@@ -29,6 +29,18 @@ const string LogEntry::GetIpAddress() const
     return ipAddress;
 } //----- Fin de GetIpAddress
 
+const string LogEntry::GetUserLogname() const
+// Algorithme :
+{
+    return userLogname;
+} //----- Fin de GetUserLogname
+
+const string LogEntry::GetAuthUser() const
+// Algorithme :
+{
+    return authUser;
+} //----- Fin de GetAuthUser
+
 const int LogEntry::GetTimestamp() const
 // Algorithme :
 {
@@ -40,6 +52,18 @@ const string LogEntry::GetHttpMethod() const
 {
     return httpMethod;
 } //----- Fin de GetHttpMethod
+
+const string LogEntry::GetDestinationUrl() const
+// Algorithme :
+{
+    return destinationUrl;
+} //----- Fin de GetDestinationUrl
+
+const string LogEntry::GetHttpVersion() const
+// Algorithme :
+{
+    return httpVersion;
+} //----- Fin de GetHttpVersion
 
 const int LogEntry::GetStatusCode() const
 // Algorithme :
@@ -71,13 +95,18 @@ const string LogEntry::GetUserAgent() const
 
 LogEntry::LogEntry(
     string ipAddress,
+    string userLogname,
+    string authUser,
     int timestamp,
     string httpMethod,
+    string destinationUrl,
+    string httpVersion,
     int statusCode,
     long dataSize,
     string referrerUrl,
-    string userAgent) : ipAddress(ipAddress), timestamp(timestamp), httpMethod(httpMethod),
-      statusCode(statusCode), dataSize(dataSize), referrerUrl(referrerUrl),
+    string userAgent) : ipAddress(ipAddress), userLogname(userLogname), authUser(authUser),
+      timestamp(timestamp), httpMethod(httpMethod), destinationUrl(destinationUrl), 
+      httpVersion(httpVersion), statusCode(statusCode), dataSize(dataSize), referrerUrl(referrerUrl),
       userAgent(userAgent) {
 #ifdef MAP
     cout << "Appel au constructeur de <LogEntry>" << endl;
