@@ -51,7 +51,7 @@ public:
      * * @post Met à jour hits[requestedUrl].second (hits totaux).
      * @post Si refererUrl est interne, met à jour hits[refererUrl].first[requestedUrl] (poids de l'arc).
      */
-    void LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourEnd);
+    bool LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourEnd);
 
     /**
      * @brief Calcule le Top N des documents les plus consultés.

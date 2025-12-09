@@ -134,7 +134,9 @@ int main(int argc, char* argv[])
     Graph graph;
     
     cout << CouleurTTY(VERT) << "Chargement du fichier log..." << CouleurTTY(RESET) << endl;
-    graph.LoadFile(logFile, excludeOption, hourOption ? filterHour : -1);
+    if (!graph.LoadFile(logFile, excludeOption, hourOption ? filterHour : -1)) {
+        return 1;
+    }
     
     // Displaying the top 10
     cout << endl << CouleurTTY(CYAN) << "=== Top 10 des documents les plus consultés ===" 
