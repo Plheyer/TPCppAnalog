@@ -1,0 +1,4 @@
+Test 11 : -e avec que des ressources.
+But : exclusion retire tout.
+Entrées : option -e activée, log ne contenant que des ressources filtrables.
+Attendus : stdout vide, .dot minimal voire absent, stderr vide, code retour 0.

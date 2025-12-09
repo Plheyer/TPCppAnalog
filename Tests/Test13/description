@@ -1,0 +1,4 @@
+Test 13 : -t non numérique.
+But : vérifier la validation de type pour -t.
+Entrées : -t suivi d’une chaîne non numérique.
+Attendus : erreur sur stderr, stdout vide, code retour d’échec, aucun .dot.

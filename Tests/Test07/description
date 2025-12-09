@@ -1,0 +1,4 @@
+Test 7 : argument fichier après -g invalide (droits, chemin).
+But : s’assurer que l’option -g signale un fichier cible non accessible.
+Entrées : commande avec -g vers un chemin sans droits ou inexistant.
+Attendus : message d’erreur sur stderr, pas de fichier .dot créé, stdout vide ou minimal, code retour d’échec.

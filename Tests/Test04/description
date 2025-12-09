@@ -1,0 +1,4 @@
+Test 4 : ligne mal formée.
+But : vérifier la robustesse du parseur sur une ligne invalide (format Apache cassé).
+Entrées : log contenant au moins une ligne non conforme.
+Attendus : soit la ligne est ignorée avec un message d’avertissement sur stderr, soit arrêt contrôlé selon les spécifications ; code retour cohérent (souvent 0 si tolérance), .dot généré uniquement à partir des lignes valides.

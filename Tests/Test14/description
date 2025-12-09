@@ -1,0 +1,4 @@
+Test 14 : -t valide.
+But : filtrage par heure sur plage autorisée.
+Entrées : -t avec heure 0–23, log couvrant plusieurs heures.
+Attendus : stdout/.dot ne conservent que les hits à l’heure ciblée, stderr vide, code retour 0.

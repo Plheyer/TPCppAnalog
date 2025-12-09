@@ -1,0 +1,4 @@
+Test 2 : fichier existe, tout est ok.
+But : parcours nominal avec log valide.
+Entrées : log complet et bien formé, options par défaut ou -g valide.
+Attendus : sortie standard listant les hits filtrés selon les règles par défaut, pas d’erreur sur stderr, code retour 0, fichier .dot généré si l’option graph est utilisée.

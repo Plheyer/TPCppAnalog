@@ -1,0 +1,4 @@
+Test 19 : -t sans argument.
+But : validation d’option manquante.
+Entrées : -t non suivi d’une valeur d’heure.
+Attendus : erreur sur stderr, stdout vide, code retour d’échec, pas de .dot.

@@ -31,6 +31,12 @@ void displayHelp() {
     cout << "  analog -g graph.dot -e -t 10 anonymous.log" << endl;
 }
 
+string GetExecutableDirectory(const string &path)
+{
+    size_t pos = path.find_last_of("/\\");
+    return (pos == string::npos) ? "." : path.substr(0, pos);
+}
+
 int main(int argc, char* argv[])
 {
     bool excludeOption = false;
@@ -40,8 +46,12 @@ int main(int argc, char* argv[])
     int filterHour = -1;
     string graphVizFile, logFile, baseUri;
 
+    string execDir = GetExecutableDirectory(argv[0]);
+    string configPath = execDir + "/../config.ini";
     Config config;
-    config.LoadFromFile();
+    if (!config.LoadFromFile(configPath)) {
+        return 1;
+    }
     debug = config.debug;
     baseUri = config.baseUri;
     

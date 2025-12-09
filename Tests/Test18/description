@@ -1,0 +1,4 @@
+Test 18 : -g sans argument.
+But : vérifier la détection d’option incomplète.
+Entrées : -g non suivi d’un chemin.
+Attendus : message d’erreur sur stderr, stdout vide, code retour d’échec, aucun .dot.

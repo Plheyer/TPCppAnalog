@@ -1,0 +1,4 @@
+Test 16 : -e et -t valides, quelques entrées retirées.
+But : vérifier l’intersection des filtres.
+Entrées : -e filtre certaines ressources, -t cible une heure ; quelques hits restent.
+Attendus : stdout/.dot contiennent uniquement les hits restants, stderr vide, code retour 0.

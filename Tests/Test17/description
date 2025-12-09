@@ -1,0 +1,4 @@
+Test 17 : -e et -t valides, aucun hit exclu.
+But : s’assurer que les filtres neutres n’altèrent pas la sortie.
+Entrées : -e sur des ressources absentes et -t sur une heure contenant tous les hits.
+Attendus : sortie identique au cas nominal, stderr vide, code retour 0, .dot inchangé.

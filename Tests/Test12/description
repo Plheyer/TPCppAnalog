@@ -1,0 +1,4 @@
+Test 12 : -t invalide (heure <0 ou >23).
+But : contrôler la validation de l’option -t.
+Entrées : -t suivi d’une heure hors plage.
+Attendus : message d’erreur sur stderr, pas de traitement, stdout vide, code retour d’échec, pas de .dot généré.

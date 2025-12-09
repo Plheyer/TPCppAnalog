@@ -1,0 +1,4 @@
+Test 1 : fichier n’existe pas.
+But : vérifier la gestion d’un chemin de log inexistant.
+Entrées : option de fichier (-g ou lecture par défaut) pointant vers un fichier absent.
+Attendus : aucune sortie standard utile, message d’erreur sur stderr signalant l’impossibilité d’ouvrir le fichier, code retour d’échec (≠ 0), aucun fichier .dot généré.

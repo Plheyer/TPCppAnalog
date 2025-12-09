@@ -1,0 +1,4 @@
+Test 3 : fichier vide.
+But : s’assurer que l’absence de lignes est gérée.
+Entrées : fichier log vide.
+Attendus : sortie standard vide ou message indiquant aucun résultat, stderr silencieux, code retour 0, aucun .dot ou fichier vide généré selon implémentation.

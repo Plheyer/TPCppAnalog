@@ -1,0 +1,4 @@
+Test 8 : -g avec fichier valide.
+But : vérifier la génération Graphviz nominale.
+Entrées : log valide et -g cible accessible.
+Attendus : stdout listant les hits, stderr vide, code retour 0, fichier .dot généré conforme et comparaison avec *.outfile.

@@ -1,0 +1,4 @@
+Test 9 : -e avec 0 ressource.
+But : exclusion activée mais aucune ressource à filtrer.
+Entrées : option -e sans liste (ou liste vide) et log valide.
+Attendus : aucun hit retiré, stdout identique au cas nominal, stderr vide, code retour 0, .dot identique au résultat sans -e.

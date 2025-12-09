@@ -30,7 +30,7 @@ OBJECTS  = $(SOURCES:.cpp=.o)
 DEPS     = $(OBJECTS:.o=.d)
 
 # Nom de l'exécutable
-EXE      = analog
+EXE      = bin/analog
 
 # Cibles phony
 .PHONY: all clean run run-map trace valgrind
@@ -51,7 +51,7 @@ $(EXE): $(OBJECTS)
 
 # Exécuter le programme
 run: $(EXE)
-	./$(EXE)
+	./bin/$(EXE)
 
 # Compiler et exécuter avec MAP activé (MAP=1)
 run-map: clean
@@ -60,7 +60,7 @@ run-map: clean
 
 # Test mémoire avec Valgrind (si installé sur la machine)
 valgrind: $(EXE)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXE)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/$(EXE)
 
 # Nettoyage
 clean:

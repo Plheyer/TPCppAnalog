@@ -1,0 +1,4 @@
+Test 10 : -e avec quelques ressources.
+But : vérifier le filtrage partiel des ressources statiques (images, css, js…).
+Entrées : option -e activée, log contenant des ressources à exclure et d’autres à garder.
+Attendus : stdout et .dot sans les ressources exclues, stderr vide, code retour 0.

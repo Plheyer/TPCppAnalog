@@ -1,0 +1,4 @@
+Test 15 : -e et -t valides mais filtre tout.
+But : combinaison excluant toutes les entrées.
+Entrées : -e et -t tels que rien ne reste (heure sans hits ou ressources toutes exclues).
+Attendus : stdout vide, .dot minimal/absent, stderr vide, code retour 0.
