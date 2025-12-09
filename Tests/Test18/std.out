@@ -1,0 +1,8 @@
+Usage: analog [options] fichier_log
+Options:
+  -g fichier.dot : Génère un fichier GraphViz représentant le graphe
+  -e             : Exclut les documents ayant une extension de type image, CSS ou JavaScript
+  -t heure       : Ne considère que les hits qui sont dans le créneau horaire [heure, heure+1[
+
+Exemple:
+  analog -g graph.dot -e -t 10 anonymous.log
