@@ -35,13 +35,13 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin)
+bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin, const string & baseUri)
 // Algorithme :
 // 1. Ouvre le fichier filePath.
 // 2. Initialise les filtres avec excludeRessourceFile et filterHourBegin.
 // 3. Lit le fichier ligne par ligne et appelle la fonction de parsing/agrégation.
 {
-    ApacheLogStream logStream (filePath, "http://intranet-if.insa-lyon.fr");
+    ApacheLogStream logStream (filePath, baseUri );
 
     if (logStream.fail()) {
         cerr << CouleurTTY(ROUGE) << "Erreur: Impossible d'ouvrir le fichier " << filePath << " pour la lecture." << CouleurTTY(RESET) << endl;

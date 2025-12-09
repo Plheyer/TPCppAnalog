@@ -44,7 +44,7 @@ public:
      * @param excludeRessourceFile Indique si les fichiers ressources doivent être exclus.
      * @param filterHourBegin Heure de début pour filtrer les entrées (valeur -1 pour désactiver).
      */
-    bool LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin);
+    bool LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin, const string & baseUri);
 
     /**
      * @brief Calcule le Top N des documents les plus consultés.
