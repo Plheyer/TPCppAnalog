@@ -61,7 +61,7 @@ LogEntry ApacheLogStream::getline()
         statusCode = stoi(match[8]);
         dataSize = stol(match[9]);
         referrerUrl = match[10];
-        int startPos = referrerUrl.find(baseUri);
+        const long unsigned int startPos = referrerUrl.find(baseUri);
         if (startPos != string::npos) {
             referrerUrl.replace(startPos, baseUri.length(), "");
         }
@@ -72,7 +72,7 @@ LogEntry ApacheLogStream::getline()
     }
 
     return LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
-} //----- Fin de Afficher
+} //----- Fin de getline
 
 //------------------------------------------------- Surcharge d'opérateurs
 

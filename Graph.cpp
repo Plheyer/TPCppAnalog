@@ -63,23 +63,25 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
            logEntry.GetUserAgent().c_str());
 } //----- Fin de LoadFile
 
-void Graph::GetTopN (int N) const
+void Graph::GetTopN (int n)
 // Algorithme :
 // 1. Copie hits dans une structure triable (ex: vector<pair<string, int>>).
 // 2. Trie cette structure selon le nombre de hits (hits.second) par ordre décroissant.
 // 3. Affiche les N premiers éléments sur la console.
 {
     // 1. Copier dans une structure triable
-    vector<pair<string, int>> vect;
+    unordered_map<
+        string,
+        pair<unordered_map<string,int>, int>
+    >::const_iterator it;
 
-    for (const auto & entry : hits)
+    for (it = hits.begin(); it != hits.end(); ++it)
     {
-        vect.push_back(make_pair(entry.first, entry.second.second));
-        // entry.second.second = nombre total de hits
+        topList.push_back(make_pair(it->first, it->second.second));
     }
 
     // 2. Trier par ordre décroissant selon le nombre de hits
-    sort(vect.begin(), vect.end(),
+    sort(topList.begin(), topList.end(),
         [](const pair<string,int> &a,
         const pair<string,int> &b)
         {
@@ -87,10 +89,10 @@ void Graph::GetTopN (int N) const
         });
 
     // 3. Afficher les N premiers
-    int limit = min(N, static_cast<int>(vect.size()));
+    int limit = min(n, static_cast<int>(topList.size()));
     for (int i = 0; i < limit; i++)
     {
-        const auto & p = vect[i];
+        const pair<string, int> & p = topList[i];
         cout << CouleurTTY(VERT) << p.first
                   << CouleurTTY(RESET) << " (" << p.second << " hits)\n";
     }

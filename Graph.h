@@ -35,7 +35,6 @@ class Graph
 public:
 //----------------------------------------------------- Attributs publics
     unordered_map<string, pair<unordered_map<string, int>, int>> hits;
-    vector<pair<string, int>> topList;
 
 //----------------------------------------------------- Méthodes publiques
     // type Méthode ( liste des paramètres );
@@ -59,7 +58,7 @@ public:
      * @param N Le nombre de documents à afficher (par défaut 10).
      * @return affiche dans le stream out la liste du top 10.
      */
-    void GetTopN (int N = 10) const;
+    void GetTopN (int N = 10);
 
     /**
      * @brief Génère le fichier de description du graphe au format GraphViz.
@@ -76,6 +75,7 @@ public:
     #ifdef MAP
         cout << "Appel au constructeur de <Graph>" << endl;
     #endif
+        topList = vector<pair<string,int>>();
     }
     // Mode d'emploi :
     //
@@ -97,6 +97,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
+vector<pair<string, int>> topList;
 
 };
 

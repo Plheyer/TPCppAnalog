@@ -29,7 +29,7 @@ public:
     bool debug;
     string baseUri;
 //----------------------------------------------------- Méthodes publiques
-    bool LoadFromFile(const std::string& filename = "config.ini");
+    bool LoadFromFile(const string& filename = "config.ini");
     // Mode d'emploi :
     //    Charge la configuration à partir du fichier donné.
     //    Le fichier doit respecter un format clé=valeur.
