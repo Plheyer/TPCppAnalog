@@ -18,9 +18,11 @@ using namespace std;
 #include <string>
 #include <utility>
 #include <map>
+#include <algorithm>
 //------------------------------------------------------ Include personnel
 #include "Graph.h"
 #include "ApacheLogStream.h"
+#include "CouleurTTY.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -67,6 +69,31 @@ void Graph::GetTopN (int N) const
 // 2. Trie cette structure selon le nombre de hits (hits.second) par ordre décroissant.
 // 3. Affiche les N premiers éléments sur la console.
 {
+    // 1. Copier dans une structure triable
+    vector<pair<string, int>> vect;
+
+    for (const auto & entry : hits)
+    {
+        vect.push_back(make_pair(entry.first, entry.second.second));
+        // entry.second.second = nombre total de hits
+    }
+
+    // 2. Trier par ordre décroissant selon le nombre de hits
+    sort(vect.begin(), vect.end(),
+        [](const pair<string,int> &a,
+        const pair<string,int> &b)
+        {
+            return a.second < b.second; // tri croissant
+        });
+
+    // 3. Afficher les N premiers
+    int limit = min(N, static_cast<int>(vect.size()));
+    for (int i = 0; i < limit; i++)
+    {
+        const auto & p = vect[i];
+        cout << CouleurTTY(VERT) << p.first
+                  << CouleurTTY(RESET) << " (" << p.second << " hits)\n";
+    }
 } //----- Fin de GetTopN
 
 bool Graph::GenerateGraphViz (const string& filename) const
@@ -94,7 +121,7 @@ bool Graph::GenerateGraphViz (const string& filename) const
 
     // Pour gérer les URLs contenant des caractères spéciaux ou des espaces dans GraphViz
     // nous mapperons chaque URL à un identifiant de nœud unique (N1, N2, ...).
-    // Nous utilisons std::map ici pour la cohérence des ID (bien qu'unordered_map soit possible).
+    // Nous utilisons map ici pour la cohérence des ID (bien qu'unordered_map soit possible).
     unordered_map<string, string> urlToNodeId;
     int nodeIdCounter = 0;
 
