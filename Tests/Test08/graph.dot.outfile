@@ -1,1 +1,13 @@
-// ...existing code from Test02/graph.dot.outfile...
+digraph {
+  rankdir="LR";
+  node [shape=box, style="filled", color="#B3D9FF"];
+  N1 [label="/image.jpg", tooltip="Hits: 1"];
+  N2 [label="/page3.html", tooltip="Hits: 1"];
+  N3 [label="/page1.html", tooltip="Hits: 1"];
+  N4 [label="/page2.html", tooltip="Hits: 3"];
+  N2 -> N1 [label="1", weight=1];
+  N4 -> N2 [label="1", weight=1];
+  N4 -> N3 [label="1", weight=1];
+  N2 -> N4 [label="1", weight=1];
+  N3 -> N4 [label="2", weight=2];
+}

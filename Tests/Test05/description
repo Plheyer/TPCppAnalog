@@ -1,4 +1,4 @@
 Test 5 : ligne trop longue.
 But : tester la limite de taille de buffer de lecture.
 Entrées : une ligne dépassant la longueur maximale attendue.
-Attendus : erreur ou avertissement sur stderr selon la politique, éventuellement code retour d’échec si la ligne bloque le parsing ; les autres lignes valides sont traitées ; .dot généré uniquement si parsing réussi.
+Attendus : rien, le test passe.

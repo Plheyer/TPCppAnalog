@@ -1,4 +1,0 @@
-digraph {
-  rankdir="LR";
-  node [shape=box, style="filled", color="#B3D9FF"];
-}

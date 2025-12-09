@@ -41,7 +41,7 @@ bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
 // 2. Initialise les filtres avec excludeRessourceFile et filterHourBegin.
 // 3. Lit le fichier ligne par ligne et appelle la fonction de parsing/agrégation.
 {
-    ApacheLogStream logStream (filePath, baseUri );
+    ApacheLogStream logStream (filePath, baseUri);
 
     if (logStream.fail()) {
         cerr << CouleurTTY(ROUGE) << "Erreur: Impossible d'ouvrir le fichier " << filePath << " pour la lecture." << CouleurTTY(RESET) << endl;
@@ -145,7 +145,7 @@ bool Graph::GenerateGraphViz (const string& filename) const
 // 6. Retourne true si l'écriture a réussi.
 {
     // 1. Ouvre le fichier filename.dot.
-    string fullFilename = filename + ".dot";
+    string fullFilename = filename;
     ofstream dotFile(fullFilename);
 
     if (!dotFile.is_open()) {
