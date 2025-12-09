@@ -17,6 +17,7 @@ using namespace std;
 #include "LogEntry.h"
 
 //------------------------------------------------------------- Constantes
+#define MAX_BUFFER 4096
 
 //------------------------------------------------------------------ Types
 
@@ -36,7 +37,7 @@ public:
      * Lit une ligne du flux de logs Apache et la retourne sous forme d'un LogEntry
      * @return L'entrée de log lue
      */
-    ApacheLogStream& getline(LogEntry* s, streamsize __n);
+    bool getline(LogEntry*& entry);
 
     /**
      * Vérifie si le flux est en état d'échec (échec d'ouverture, etc.)

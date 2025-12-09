@@ -58,7 +58,7 @@ public:
      * @param N Le nombre de documents à afficher (par défaut 10).
      * @return affiche dans le stream out la liste du top 10.
      */
-    void GetTopN (int N = 10);
+    void GetTopN (int N = 10) const;
 
     /**
      * @brief Génère le fichier de description du graphe au format GraphViz.
@@ -77,7 +77,6 @@ public:
         #endif
 
         hits = unordered_map<string, pair<unordered_map<string, int>, int>>();
-        topList = vector<pair<string,int>>();
     }
     // Mode d'emploi :
     //
@@ -102,8 +101,6 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-vector<pair<string, int>> topList;
-
 };
 
 //-------------------------------- Autres définitions dépendantes de <Graph>

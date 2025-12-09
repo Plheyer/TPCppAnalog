@@ -48,49 +48,50 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
         return;
     }
 
-    LogEntry logEntry;
-    while (logStream.getline(&logEntry, 0)) {
+    LogEntry* logEntry = nullptr;
+    while (logStream.getline(logEntry)) {
 
         printf("Processing log file: %s\n", filePath.c_str());
         printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
         printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
-            logEntry.GetIpAddress().c_str(),
-            logEntry.GetUserLogname().c_str(),
-            logEntry.GetAuthUser().c_str(),
-            logEntry.GetTimestamp(),
-            logEntry.GetHttpMethod().c_str(),
-            logEntry.GetDestinationUrl().c_str(),
-            logEntry.GetHttpVersion().c_str(),
-            logEntry.GetStatusCode(),
-            logEntry.GetDataSize(),
-            logEntry.GetReferrerUrl().c_str(),
-            logEntry.GetUserAgent().c_str());
+            logEntry->GetIpAddress().c_str(),
+            logEntry->GetUserLogname().c_str(),
+            logEntry->GetAuthUser().c_str(),
+            logEntry->GetTimestamp(),
+            logEntry->GetHttpMethod().c_str(),
+            logEntry->GetDestinationUrl().c_str(),
+            logEntry->GetHttpVersion().c_str(),
+            logEntry->GetStatusCode(),
+            logEntry->GetDataSize(),
+            logEntry->GetReferrerUrl().c_str(),
+            logEntry->GetUserAgent().c_str());
 
-        if (hits.find(logEntry.GetDestinationUrl()) == hits.end()) {
-            hits[logEntry.GetDestinationUrl()] = make_pair(unordered_map<string, int>(), 0);
+        if (hits.find(logEntry->GetDestinationUrl()) == hits.end()) {
+            hits[logEntry->GetDestinationUrl()] = make_pair(unordered_map<string, int>(), 0);
         }
-        hits[logEntry.GetDestinationUrl()].second++;
+        hits[logEntry->GetDestinationUrl()].second++;
 
-        if (hits[logEntry.GetDestinationUrl()].first.find(logEntry.GetReferrerUrl()) == hits[logEntry.GetDestinationUrl()].first.end()) {
-            hits[logEntry.GetDestinationUrl()].first[logEntry.GetReferrerUrl()] = 0;
+        if (hits[logEntry->GetDestinationUrl()].first.find(logEntry->GetReferrerUrl()) == hits[logEntry->GetDestinationUrl()].first.end()) {
+            hits[logEntry->GetDestinationUrl()].first[logEntry->GetReferrerUrl()] = 0;
         }
-        hits[logEntry.GetDestinationUrl()].first[logEntry.GetReferrerUrl()]++;
+        hits[logEntry->GetDestinationUrl()].first[logEntry->GetReferrerUrl()]++;
+        delete logEntry;
     }
     
 } //----- Fin de LoadFile
 
-void Graph::GetTopN (int n)
+void Graph::GetTopN (int n) const
 // Algorithme :
 // 1. Copie hits dans une structure triable (ex: vector<pair<string, int>>).
 // 2. Trie cette structure selon le nombre de hits (hits.second) par ordre décroissant.
 // 3. Affiche les N premiers éléments sur la console.
 {
     // 1. Copier dans une structure triable
+    vector<pair<string,int>> topList;
     unordered_map<
         string,
         pair<unordered_map<string,int>, int>
     >::const_iterator it;
-
     for (it = hits.begin(); it != hits.end(); ++it)
     {
         topList.push_back(make_pair(it->first, it->second.second));
@@ -101,7 +102,7 @@ void Graph::GetTopN (int n)
         [](const pair<string,int> &a,
         const pair<string,int> &b)
         {
-            return a.second < b.second; // tri croissant
+            return a.second > b.second; // tri croissant
         });
 
     // 3. Afficher les N premiers

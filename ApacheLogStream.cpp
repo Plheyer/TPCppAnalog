@@ -14,22 +14,29 @@
 #include <fstream>
 #include <regex>
 #include <string>
+#include <iostream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "ApacheLogStream.h"
 #include "LogEntry.h"
+#include "CouleurTTY.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-ApacheLogStream& ApacheLogStream::getline(LogEntry* s, streamsize __n)
+bool ApacheLogStream::getline(LogEntry*& entry)
 // Algorithme :
 //
 {
-    string line;
+    char line[MAX_BUFFER];
+    if (!ifstream::getline(line, sizeof(line))) {
+        return false;
+    }
+    string strLine(line);
+    regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9]+) \"([^\"]+)\" \"([^\"]+)\"");
 
     string ipAddress = "";
     string userLogname = "";
@@ -43,37 +50,34 @@ ApacheLogStream& ApacheLogStream::getline(LogEntry* s, streamsize __n)
     string referrerUrl = "";
     string userAgent = "";
 
-    ifstream::getline(*this, line);
-
-    regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9]+) \"([^\"]+)\" \"([^\"]+)\"");
-
     smatch match;
-    regex_search(line, match, expression);
-
-    if (match.size() == 12) {
-        ipAddress = match[1];
-        userLogname = match[2];
-        authUser = match[3];
-        timestamp = 0; // TODO: parsing needed
-        httpMethod = match[5];
-        destinationUrl = match[6];
-        httpVersion = match[7];
-        statusCode = stoi(match[8]);
-        dataSize = stol(match[9]);
-        referrerUrl = match[10];
-        const long unsigned int startPos = referrerUrl.find(baseUri);
-        if (startPos != string::npos) {
-            referrerUrl.replace(startPos, baseUri.length(), "");
-        }
-        userAgent = match[11];
-    } else {
-        // Handle parsing error (e.g., log it, throw an exception, etc.)
-        printf("Failed to parse log line: %s\n", line.c_str());
+    if (!regex_search(strLine, match, expression) || match.size() != 12) {
+        cerr << CouleurTTY(ROUGE) << "Failed to parse log line: " << strLine << CouleurTTY(RESET) << endl;
+        return false;
     }
 
-    s = new LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
+    ipAddress = match[1];
+    userLogname = match[2];
+    authUser = match[3];
+    timestamp = 0; // TODO: parsing needed
+    httpMethod = match[5];
+    destinationUrl = match[6];
+    httpVersion = match[7];
+    statusCode = stoi(match[8]);
+    dataSize = stol(match[9]);
+    referrerUrl = match[10];
+    userAgent = match[11];
 
-    return *this;
+    size_t startPos = referrerUrl.find(baseUri);
+    if (startPos != string::npos) {
+        referrerUrl.replace(startPos, baseUri.length(), "");
+    }
+
+    entry = new LogEntry(ipAddress, userLogname, authUser, timestamp,
+                     httpMethod, destinationUrl, httpVersion,
+                     statusCode, dataSize, referrerUrl, userAgent);
+
+    return true;
 } //----- Fin de getline
 
 bool ApacheLogStream::fail() const
