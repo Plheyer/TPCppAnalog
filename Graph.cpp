@@ -35,7 +35,7 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin)
+bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin)
 // Algorithme :
 // 1. Ouvre le fichier filePath.
 // 2. Initialise les filtres avec excludeRessourceFile et filterHourBegin.
@@ -45,7 +45,7 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
 
     if (logStream.fail()) {
         cerr << CouleurTTY(ROUGE) << "Erreur: Impossible d'ouvrir le fichier " << filePath << " pour la lecture." << CouleurTTY(RESET) << endl;
-        return;
+        return false;
     }
 
     if (excludeRessourceFile) {
@@ -113,7 +113,7 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
         hits[logEntry->GetDestinationUrl()].first[logEntry->GetReferrerUrl()]++;
         delete logEntry;
     }
-    
+    return true;    
 } //----- Fin de LoadFile
 
 void Graph::GetTopN (int n) const
@@ -165,7 +165,7 @@ bool Graph::GenerateGraphViz (const string& filename) const
     ofstream dotFile(fullFilename);
 
     if (!dotFile.is_open()) {
-        cerr << "Erreur: Impossible d'ouvrir le fichier " << fullFilename << " pour l'écriture." << endl;
+        cerr << CouleurTTY(ROUGE) << "Erreur: Impossible d'ouvrir le fichier " << fullFilename << " pour l'écriture." << CouleurTTY(RESET) << endl;
         return false;
     }
 
@@ -214,7 +214,7 @@ bool Graph::GenerateGraphViz (const string& filename) const
                 const string& destinationId = urlToNodeId.at(destinationUrl);
 
                 // Écrire la définition de l'arc : source -> destination [label="poids"]
-                dotFile << "  " << referrerId << " -> " << destinationId
+                dotFile << "  " << destinationId << " -> " << referrerId
                         << " [label=\"" << weight << "\", weight=" << weight << "];" << endl;
             } else {
                 // CAS SPÉCIAL: Si la destination n'est pas dans 'hits' (ne devrait pas arriver si le parsing est correct)
