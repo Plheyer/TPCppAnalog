@@ -25,7 +25,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-LogEntry ApacheLogStream::getline()
+ApacheLogStream& ApacheLogStream::getline(LogEntry* s, streamsize __n)
 // Algorithme :
 //
 {
@@ -43,7 +43,7 @@ LogEntry ApacheLogStream::getline()
     string referrerUrl = "";
     string userAgent = "";
 
-    std::getline(*this, line);
+    ifstream::getline(*this, line);
 
     regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9]+) \"([^\"]+)\" \"([^\"]+)\"");
 
@@ -71,8 +71,22 @@ LogEntry ApacheLogStream::getline()
         printf("Failed to parse log line: %s\n", line.c_str());
     }
 
-    return LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
+    s = new LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
+
+    return *this;
 } //----- Fin de Afficher
+
+bool ApacheLogStream::fail() const
+// Algorithme :
+{
+    return ifstream::fail();
+} //----- Fin de fail
+
+bool ApacheLogStream::eof() const
+// Algorithme :
+{
+    return ifstream::eof();
+} //----- Fin de eof
 
 //------------------------------------------------- Surcharge d'opérateurs
 

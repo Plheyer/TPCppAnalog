@@ -41,24 +41,40 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
 {
     ApacheLogStream logStream (filePath, "http://intranet-if.insa-lyon.fr");
 
-    int linesProcessed = 0;
+    if (logStream.fail()) {
+        cerr << "Erreur: Impossible d'ouvrir le fichier " << filePath << " pour la lecture." << endl;
+        return;
+    }
 
-    LogEntry logEntry = logStream.getline();
+    LogEntry logEntry;
+    while (logStream.getline(&logEntry, 0)) {
 
-    printf("Processing log file: %s\n", filePath.c_str());
-    printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
-    printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
-           logEntry.GetIpAddress().c_str(),
-           logEntry.GetUserLogname().c_str(),
-           logEntry.GetAuthUser().c_str(),
-           logEntry.GetTimestamp(),
-           logEntry.GetHttpMethod().c_str(),
-           logEntry.GetDestinationUrl().c_str(),
-           logEntry.GetHttpVersion().c_str(),
-           logEntry.GetStatusCode(),
-           logEntry.GetDataSize(),
-           logEntry.GetReferrerUrl().c_str(),
-           logEntry.GetUserAgent().c_str());
+        printf("Processing log file: %s\n", filePath.c_str());
+        printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
+        printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
+            logEntry.GetIpAddress().c_str(),
+            logEntry.GetUserLogname().c_str(),
+            logEntry.GetAuthUser().c_str(),
+            logEntry.GetTimestamp(),
+            logEntry.GetHttpMethod().c_str(),
+            logEntry.GetDestinationUrl().c_str(),
+            logEntry.GetHttpVersion().c_str(),
+            logEntry.GetStatusCode(),
+            logEntry.GetDataSize(),
+            logEntry.GetReferrerUrl().c_str(),
+            logEntry.GetUserAgent().c_str());
+
+        if (hits.find(logEntry.GetDestinationUrl()) == hits.end()) {
+            hits[logEntry.GetDestinationUrl()] = make_pair(unordered_map<string, int>(), 0);
+        }
+        hits[logEntry.GetDestinationUrl()].second++;
+
+        if (hits[logEntry.GetDestinationUrl()].first.find(logEntry.GetReferrerUrl()) == hits[logEntry.GetDestinationUrl()].first.end()) {
+            hits[logEntry.GetDestinationUrl()].first[logEntry.GetReferrerUrl()] = 0;
+        }
+        hits[logEntry.GetDestinationUrl()].first[logEntry.GetReferrerUrl()]++;
+    }
+    
 } //----- Fin de LoadFile
 
 void Graph::GetTopN (int N) const

@@ -73,9 +73,12 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
     Graph ( ){
-    #ifdef MAP
-        cout << "Appel au constructeur de <Graph>" << endl;
-    #endif
+        #ifdef MAP
+            cout << "Appel au constructeur de <Graph>" << endl;
+        #endif
+
+        hits = unordered_map<string, pair<unordered_map<string, int>, int>>();
+
     }
     // Mode d'emploi :
     //
