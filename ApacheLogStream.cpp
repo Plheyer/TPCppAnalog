@@ -61,7 +61,7 @@ ApacheLogStream& ApacheLogStream::getline(LogEntry* s, streamsize __n)
         statusCode = stoi(match[8]);
         dataSize = stol(match[9]);
         referrerUrl = match[10];
-        int startPos = referrerUrl.find(baseUri);
+        const long unsigned int startPos = referrerUrl.find(baseUri);
         if (startPos != string::npos) {
             referrerUrl.replace(startPos, baseUri.length(), "");
         }
@@ -74,7 +74,7 @@ ApacheLogStream& ApacheLogStream::getline(LogEntry* s, streamsize __n)
     s = new LogEntry(ipAddress, userLogname, authUser, timestamp, httpMethod, destinationUrl, httpVersion, statusCode, dataSize, referrerUrl, userAgent);
 
     return *this;
-} //----- Fin de Afficher
+} //----- Fin de getline
 
 bool ApacheLogStream::fail() const
 // Algorithme :

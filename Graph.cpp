@@ -18,9 +18,11 @@ using namespace std;
 #include <string>
 #include <utility>
 #include <map>
+#include <algorithm>
 //------------------------------------------------------ Include personnel
 #include "Graph.h"
 #include "ApacheLogStream.h"
+#include "CouleurTTY.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -77,12 +79,39 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
     
 } //----- Fin de LoadFile
 
-void Graph::GetTopN (int N) const
+void Graph::GetTopN (int n)
 // Algorithme :
 // 1. Copie hits dans une structure triable (ex: vector<pair<string, int>>).
 // 2. Trie cette structure selon le nombre de hits (hits.second) par ordre décroissant.
 // 3. Affiche les N premiers éléments sur la console.
 {
+    // 1. Copier dans une structure triable
+    unordered_map<
+        string,
+        pair<unordered_map<string,int>, int>
+    >::const_iterator it;
+
+    for (it = hits.begin(); it != hits.end(); ++it)
+    {
+        topList.push_back(make_pair(it->first, it->second.second));
+    }
+
+    // 2. Trier par ordre décroissant selon le nombre de hits
+    sort(topList.begin(), topList.end(),
+        [](const pair<string,int> &a,
+        const pair<string,int> &b)
+        {
+            return a.second < b.second; // tri croissant
+        });
+
+    // 3. Afficher les N premiers
+    int limit = min(n, static_cast<int>(topList.size()));
+    for (int i = 0; i < limit; i++)
+    {
+        const pair<string, int> & p = topList[i];
+        cout << CouleurTTY(VERT) << p.first
+                  << CouleurTTY(RESET) << " (" << p.second << " hits)\n";
+    }
 } //----- Fin de GetTopN
 
 bool Graph::GenerateGraphViz (const string& filename) const
@@ -110,7 +139,7 @@ bool Graph::GenerateGraphViz (const string& filename) const
 
     // Pour gérer les URLs contenant des caractères spéciaux ou des espaces dans GraphViz
     // nous mapperons chaque URL à un identifiant de nœud unique (N1, N2, ...).
-    // Nous utilisons std::map ici pour la cohérence des ID (bien qu'unordered_map soit possible).
+    // Nous utilisons map ici pour la cohérence des ID (bien qu'unordered_map soit possible).
     unordered_map<string, string> urlToNodeId;
     int nodeIdCounter = 0;
 
