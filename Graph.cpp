@@ -35,20 +35,27 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourEnd)
+bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin, const string & baseUri)
 // Algorithme :
 // 1. Ouvre le fichier filePath.
-// 2. Initialise les filtres avec excludeRessourceFile et filterHourEnd.
+// 2. Initialise les filtres avec excludeRessourceFile et filterHourBegin.
 // 3. Lit le fichier ligne par ligne et appelle la fonction de parsing/agrégation.
 {
-    ApacheLogStream logStream (filePath, "http://intranet-if.insa-lyon.fr");
+    ApacheLogStream logStream (filePath, baseUri );
 
     if (logStream.fail()) {
         cerr << CouleurTTY(ROUGE) << "Erreur: Impossible d'ouvrir le fichier " << filePath << " pour la lecture." << CouleurTTY(RESET) << endl;
         return false;
     }
 
-    int ndebug = 1;
+    if (excludeRessourceFile) {
+        cout << CouleurTTY(JAUNE) << "Attention: Fichiers ressources exclus (CSS, JS, images) !" << CouleurTTY(RESET) << endl;
+    }
+
+    if (filterHourBegin != -1) {
+        cout << CouleurTTY(JAUNE) << "Attention: Hits seulement entre " << filterHourBegin << "h et " << filterHourBegin + 1 << "h !" << CouleurTTY(RESET) << endl;
+    }
+
     LogEntry* logEntry = nullptr;
     while (logStream.getline(logEntry)) {
         #ifdef MAP
@@ -58,7 +65,7 @@ bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
                 logEntry->GetIpAddress().c_str(),
                 logEntry->GetUserLogname().c_str(),
                 logEntry->GetAuthUser().c_str(),
-                logEntry->GetTimestamp(),
+                logEntry->GetRequestedDatetime(),
                 logEntry->GetHttpMethod().c_str(),
                 logEntry->GetDestinationUrl().c_str(),
                 logEntry->GetHttpVersion().c_str(),
@@ -67,8 +74,33 @@ bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
                 logEntry->GetReferrerUrl().c_str(),
                 logEntry->GetUserAgent().c_str());
         #endif
-        cout << "Ligne: " << ndebug << endl;
-        ++ndebug;
+
+        if (excludeRessourceFile) {
+            string url = logEntry->GetDestinationUrl();
+            size_t dotPos = url.find_last_of('.');
+            if (dotPos != string::npos) {
+                string extension = url.substr(dotPos);
+                if (extension == ".css" || extension == ".js" || extension == ".png" ||
+                    extension == ".jpg" || extension == ".jpeg" || extension == ".gif" ||
+                    extension == ".ico" || extension == ".svg") {
+                    delete logEntry;
+                    continue;
+                }
+            }
+        }
+
+        if (filterHourBegin != -1) {
+            string datetime = logEntry->GetRequestedDatetime();
+            size_t colonPos = datetime.find(':');
+            if (colonPos != string::npos) {
+                string hourStr = datetime.substr(colonPos + 1, 2);
+                int hour = stoi(hourStr);
+                if (hour != filterHourBegin) {
+                    delete logEntry;
+                    continue;
+                }
+            }
+        }
 
         if (hits.find(logEntry->GetDestinationUrl()) == hits.end()) {
             hits[logEntry->GetDestinationUrl()] = make_pair(unordered_map<string, int>(), 0);

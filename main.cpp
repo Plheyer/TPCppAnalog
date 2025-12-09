@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
     Graph graph;
     
     cout << CouleurTTY(VERT) << "Chargement du fichier log..." << CouleurTTY(RESET) << endl;
-    if (!graph.LoadFile(logFile, excludeOption, hourOption ? filterHour : -1)) {
+    if (!graph.LoadFile(logFile, excludeOption, hourOption ? filterHour : -1, baseUri)) {
         return 1;
     }
     
