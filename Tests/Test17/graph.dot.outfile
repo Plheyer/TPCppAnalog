@@ -1,4 +1,0 @@
-digraph {
-  "http://intranet-if.insa-lyon.fr/page1.html" -> "/page2.html" [label="1"];
-  "http://intranet-if.insa-lyon.fr/page2.html" -> "/page1.html" [label="1"];
-}

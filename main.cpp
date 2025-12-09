@@ -37,6 +37,14 @@ string GetExecutableDirectory(const string &path)
     return (pos == string::npos) ? "." : path.substr(0, pos);
 }
 
+bool isNumber(const string& s) {
+    if (s.empty()) return false;
+    for (char c : s) {
+        if (!isdigit(c)) return false;
+    }
+    return true;
+}
+
 int main(int argc, char* argv[])
 {
     bool excludeOption = false;
@@ -82,18 +90,26 @@ int main(int argc, char* argv[])
         else if (arg == "-t") {
             if (i + 1 >= argc) {
                 cerr << CouleurTTY(ROUGE) << "Erreur: L'option -t nécessite une heure (0-23)" 
-                     << CouleurTTY(RESET) << endl;
+                    << CouleurTTY(RESET) << endl;
                 displayHelp();
                 return 1;
             }
-            hourOption = true;
-            filterHour = atoi(argv[i + 1]);
-            
-            if (filterHour < 0 || filterHour > 23) {
-                cerr << CouleurTTY(ROUGE) << "Erreur: L'heure doit être comprise entre 0 et 23" 
-                     << CouleurTTY(RESET) << endl;
+
+            string hourStr = argv[i + 1];
+            if (!isNumber(hourStr)) {
+                cerr << CouleurTTY(ROUGE) << "Erreur: L'heure doit être un nombre entier" 
+                    << CouleurTTY(RESET) << endl;
                 return 1;
             }
+
+            int filterHour = stoi(hourStr);
+            if (filterHour < 0 || filterHour > 23) {
+                cerr << CouleurTTY(ROUGE) << "Erreur: L'heure doit être comprise entre 0 et 23" 
+                    << CouleurTTY(RESET) << endl;
+                return 1;
+            }
+
+            hourOption = true;
             i += 2;
         }
         else if (arg[0] == '-') {
