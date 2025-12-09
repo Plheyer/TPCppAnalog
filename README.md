@@ -30,7 +30,7 @@ Il extrait des statistiques, filtre les hits selon plusieurs critères et peut g
 
 ### Syntaxe générale
 
-./analog [options] fichier_log
+./bin/analog [options] fichier_log
 
 ### Options disponibles
 | Option	| Description |
@@ -45,21 +45,21 @@ Il extrait des statistiques, filtre les hits selon plusieurs critères et peut g
 ##### ➡️ Générer un graphe
 
 ```sh
-./analog -g sortie.dot access.log
+./bin/analog -g sortie.dot access.log
 ```
 
 
-##### ➡️ Filtrer les images et ne garder que l’heure 14
+##### ➡️ Exclure les images/CSS/JS et ne garder que l’heure 14
 
 ```sh
-./analog -e -t 14 access.log
+./bin/analog -e -t 14 access.log
 ```
 
 
 ##### ➡️ Simple top 10
 
 ```sh
-./analog access.log
+./bin/analog access.log
 ```
 
 ## 🏗️ Config
@@ -74,6 +74,12 @@ Dans config.ini (ou tout autre fichier de configuration en format .ini), il faut
 ```sh
 make
 ```
+
+## ❌ Erreurs courantes
+
+- **Erreur: Impossible d'ouvrir le fichier ...** : Vérifiez que le chemin du fichier de log est correct.
+
+
 
 ## 👥 Auteurs
 

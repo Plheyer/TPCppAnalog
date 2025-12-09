@@ -48,31 +48,15 @@ bool Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
         return false;
     }
 
-    if (excludeRessourceFile) {
-        cout << CouleurTTY(JAUNE) << "Attention: Fichiers ressources exclus (CSS, JS, images) !" << CouleurTTY(RESET) << endl;
-    }
-
-    if (filterHourBegin != -1) {
-        cout << CouleurTTY(JAUNE) << "Attention: Hits seulement entre " << filterHourBegin << "h et " << filterHourBegin + 1 << "h !" << CouleurTTY(RESET) << endl;
-    }
-
     LogEntry* logEntry = nullptr;
     while (logStream.getline(logEntry)) {
         #ifdef MAP
-            printf("Processing log file: %s\n", filePath.c_str());
-            printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
-            printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
-                logEntry->GetIpAddress().c_str(),
-                logEntry->GetUserLogname().c_str(),
-                logEntry->GetAuthUser().c_str(),
-                logEntry->GetRequestedDatetime(),
-                logEntry->GetHttpMethod().c_str(),
-                logEntry->GetDestinationUrl().c_str(),
-                logEntry->GetHttpVersion().c_str(),
-                logEntry->GetStatusCode(),
-                logEntry->GetDataSize(),
-                logEntry->GetReferrerUrl().c_str(),
-                logEntry->GetUserAgent().c_str());
+        cout << logEntry->GetIpAddress() << " | " << logEntry->GetUserLogname() << " | "
+            << logEntry->GetAuthUser() << " | " << logEntry->GetRequestedDatetime() << " | "
+            << logEntry->GetHttpMethod() << " | " << logEntry->GetDestinationUrl() << " | " 
+            << logEntry->GetHttpVersion() << " | " << logEntry->GetStatusCode() << " | " 
+            << logEntry->GetDataSize() << " | " << logEntry->GetReferrerUrl() << " | " 
+            << logEntry->GetUserAgent() << endl;
         #endif
 
         if (excludeRessourceFile) {
