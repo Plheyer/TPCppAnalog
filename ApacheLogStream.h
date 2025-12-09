@@ -36,7 +36,19 @@ public:
      * Lit une ligne du flux de logs Apache et la retourne sous forme d'un LogEntry
      * @return L'entrée de log lue
      */
-    LogEntry getline();
+    ApacheLogStream& getline(LogEntry* s, streamsize __n);
+
+    /**
+     * Vérifie si le flux est en état d'échec (échec d'ouverture, etc.)
+     * @return true si le flux est en échec, false sinon
+     */
+    bool fail() const;
+
+    /**
+     * Vérifie si le flux est arrivé à la fin du fichier
+     * @return true si la fin du fichier est atteinte, false sinon
+     */
+    bool eof() const;
 
 //------------------------------------------------- Surcharge d'opérateurs
 
