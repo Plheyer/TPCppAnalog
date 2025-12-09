@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
                 return 1;
             }
 
-            int filterHour = stoi(hourStr);
+            filterHour = stoi(hourStr);
             if (filterHour < 0 || filterHour > 23) {
                 cerr << CouleurTTY(ROUGE) << "Erreur: L'heure doit être comprise entre 0 et 23" 
                     << CouleurTTY(RESET) << endl;

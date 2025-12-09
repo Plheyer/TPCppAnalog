@@ -1,4 +1,4 @@
 Test 6 : ligne vide.
 But : vérifier qu’une ligne blanche n’entraîne pas d’erreur.
 Entrées : log contenant des lignes vides intercalées.
-Attendus : lignes vides ignorées, aucune erreur stderr, code retour 0, .dot généré à partir des seules lignes valides.
+Attendus : lignes vides ignorées, erreur stderr pour la ligne, code retour 0.
