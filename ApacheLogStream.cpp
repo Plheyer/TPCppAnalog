@@ -36,7 +36,7 @@ bool ApacheLogStream::getline(LogEntry*& entry)
         return false;
     }
     string strLine(line);
-    regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9]+) \"([^\"]+)\" \"([^\"]+)\"");
+    regex expression("([0-9.]+) ([\\S]+) ([\\S]+) \\[([ \\S]+)\\] \"([A-Z]+) ([\\S]+) ([^\\\"]+)\" ([0-9]+) ([0-9-]+) \"([^\"]+)\" \"([^\"]+)\"");
 
     string ipAddress = "";
     string userLogname = "";
@@ -64,7 +64,11 @@ bool ApacheLogStream::getline(LogEntry*& entry)
     destinationUrl = match[6];
     httpVersion = match[7];
     statusCode = stoi(match[8]);
-    dataSize = stol(match[9]);
+    if (match[9] == "-") {
+        dataSize = 0;
+    } else {
+        dataSize = stol(match[9]);
+    }
     referrerUrl = match[10];
     userAgent = match[11];
 

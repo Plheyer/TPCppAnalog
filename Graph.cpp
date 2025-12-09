@@ -48,23 +48,27 @@ void Graph::LoadFile (const string & filePath, bool excludeRessourceFile, int fi
         return;
     }
 
+    int ndebug = 1;
     LogEntry* logEntry = nullptr;
     while (logStream.getline(logEntry)) {
-
-        printf("Processing log file: %s\n", filePath.c_str());
-        printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
-        printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
-            logEntry->GetIpAddress().c_str(),
-            logEntry->GetUserLogname().c_str(),
-            logEntry->GetAuthUser().c_str(),
-            logEntry->GetTimestamp(),
-            logEntry->GetHttpMethod().c_str(),
-            logEntry->GetDestinationUrl().c_str(),
-            logEntry->GetHttpVersion().c_str(),
-            logEntry->GetStatusCode(),
-            logEntry->GetDataSize(),
-            logEntry->GetReferrerUrl().c_str(),
-            logEntry->GetUserAgent().c_str());
+        #ifdef MAP
+            printf("Processing log file: %s\n", filePath.c_str());
+            printf("IP, User Logname, Auth User, Timestamp, HTTP Method, Destination URL, HTTP Version, Status Code, Data Size, Referrer URL, User Agent\n");
+            printf("%s, %s, %s, %d, %s, %s, %s, %d, %ld, %s, %s\n",
+                logEntry->GetIpAddress().c_str(),
+                logEntry->GetUserLogname().c_str(),
+                logEntry->GetAuthUser().c_str(),
+                logEntry->GetTimestamp(),
+                logEntry->GetHttpMethod().c_str(),
+                logEntry->GetDestinationUrl().c_str(),
+                logEntry->GetHttpVersion().c_str(),
+                logEntry->GetStatusCode(),
+                logEntry->GetDataSize(),
+                logEntry->GetReferrerUrl().c_str(),
+                logEntry->GetUserAgent().c_str());
+        #endif
+        cout << "Ligne: " << ndebug << endl;
+        ++ndebug;
 
         if (hits.find(logEntry->GetDestinationUrl()) == hits.end()) {
             hits[logEntry->GetDestinationUrl()] = make_pair(unordered_map<string, int>(), 0);
