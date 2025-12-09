@@ -77,9 +77,11 @@ make
 
 ## ❌ Erreurs courantes
 
-- **Erreur: Impossible d'ouvrir le fichier ...** : Vérifiez que le chemin du fichier de log est correct.
-
-
+- **Erreur: Impossible d'ouvrir le fichier ...  pour la lecture.** : Vérifiez que le fichier de log existe et que vous avez la permission de lire ce dernier.
+- **Failed to parse log line: ...** : Vérifiez que le fichier de log que vous avez fourni est bien un fichier de log au format Apache standard.
+- **Error: Could not open config file: ...** : Vérifiez que le fichier de configuration (.ini) existe dans le même répertoire de l'exécutable et que vous avez la permission de lire ce dernier.
+- **Erreur: Impossible d'ouvrir le fichier ... pour l'écriture.** : Vérifiez que vous avez les droits d'écriture dans le répertoire de destination pour votre fichier GraphViz (ce que vous avez indiqué après l'option -g).
+- **Erreur lors de la génération du fichier GraphViz** : Vérifiez que vous avez les droits d'écriture dans le répertoire de destination pour votre fichier GraphViz (ce que vous avez indiqué après l'option -g).
 
 ## 👥 Auteurs
 
