@@ -41,7 +41,7 @@ bool ApacheLogStream::getline(LogEntry*& entry)
     string ipAddress = "";
     string userLogname = "";
     string authUser = "";
-    int timestamp = 0;
+    string requestedDatetime = "";
     string httpMethod = "";
     string destinationUrl = "";
     string httpVersion = "";
@@ -59,7 +59,7 @@ bool ApacheLogStream::getline(LogEntry*& entry)
     ipAddress = match[1];
     userLogname = match[2];
     authUser = match[3];
-    timestamp = 0; // TODO: parsing needed
+    requestedDatetime = match[4];
     httpMethod = match[5];
     destinationUrl = match[6];
     httpVersion = match[7];
@@ -77,7 +77,7 @@ bool ApacheLogStream::getline(LogEntry*& entry)
         referrerUrl.replace(startPos, baseUri.length(), "");
     }
 
-    entry = new LogEntry(ipAddress, userLogname, authUser, timestamp,
+    entry = new LogEntry(ipAddress, userLogname, authUser, requestedDatetime,
                      httpMethod, destinationUrl, httpVersion,
                      statusCode, dataSize, referrerUrl, userAgent);
 

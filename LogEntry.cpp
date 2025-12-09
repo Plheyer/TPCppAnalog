@@ -41,11 +41,11 @@ const string LogEntry::GetAuthUser() const
     return authUser;
 } //----- Fin de GetAuthUser
 
-const int LogEntry::GetTimestamp() const
+const string LogEntry::GetRequestedDatetime() const
 // Algorithme :
 {
-    return timestamp;
-} //----- Fin de GetTimestamp
+    return requestedDatetime;
+} //----- Fin de GetRequestedDatetime
 
 const string LogEntry::GetHttpMethod() const
 // Algorithme :
@@ -97,7 +97,7 @@ LogEntry::LogEntry(
     string ipAddress,
     string userLogname,
     string authUser,
-    int timestamp,
+    string requestedDatetime,
     string httpMethod,
     string destinationUrl,
     string httpVersion,
@@ -105,7 +105,7 @@ LogEntry::LogEntry(
     long dataSize,
     string referrerUrl,
     string userAgent) : ipAddress(ipAddress), userLogname(userLogname), authUser(authUser),
-      timestamp(timestamp), httpMethod(httpMethod), destinationUrl(destinationUrl), 
+      requestedDatetime(requestedDatetime), httpMethod(httpMethod), destinationUrl(destinationUrl), 
       httpVersion(httpVersion), statusCode(statusCode), dataSize(dataSize), referrerUrl(referrerUrl),
       userAgent(userAgent) {
 #ifdef MAP

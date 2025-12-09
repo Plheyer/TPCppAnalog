@@ -48,7 +48,7 @@ public:
     // Contrat :
     //
 
-    const int GetTimestamp() const;
+    const string GetRequestedDatetime() const;
     // Mode d'emploi :
     //
     // Contrat :
@@ -102,7 +102,7 @@ public:
     LogEntry (string ipAddress = "",
         string userLogname = "",
         string authUser = "",
-        int timestamp = 0,
+        string requestedDatetime = "",
         string httpMethod = "",
         string destinationUrl = "",
         string httpVersion = "",
@@ -130,7 +130,7 @@ protected:
     const string ipAddress;
     const string userLogname;
     const string authUser;
-    const int timestamp;
+    const string requestedDatetime;
     const string httpMethod;
     const string destinationUrl;
     const string httpVersion;

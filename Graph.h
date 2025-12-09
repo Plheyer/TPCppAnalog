@@ -37,21 +37,14 @@ public:
     unordered_map<string, pair<unordered_map<string, int>, int>> hits;
 
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+
     /**
-     * @brief Traite les informations d'une ligne de log pour mettre à jour le graphe.
-     * @param requestedUrl URL du document demandé (cible du hit).
-     * @param refererUrl URL du référent (source du lien).
-     * @param logHour L'heure de la requête pour la vérification du filtre -t.
-     * @param isValidHit Booléen indiquant si le hit est valide après application des filtres -e et -t.
-     * * @post Met à jour hits[requestedUrl].second (hits totaux).
-     * @post Si refererUrl est interne, met à jour hits[refererUrl].first[requestedUrl] (poids de l'arc).
+     * @brief Charge et analyse un fichier de logs Apache.
+     * @param filePath Le chemin du fichier de logs à analyser.
+     * @param excludeRessourceFile Indique si les fichiers ressources doivent être exclus.
+     * @param filterHourBegin Heure de début pour filtrer les entrées (valeur -1 pour désactiver).
      */
-    void LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourEnd);
+    void LoadFile (const string & filePath, bool excludeRessourceFile, int filterHourBegin);
 
     /**
      * @brief Calcule le Top N des documents les plus consultés.
